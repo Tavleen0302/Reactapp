@@ -19,7 +19,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
       {isPatientSelected ? <PatientButtons /> : <DoctorButtons />} // Conditionally render PatientButtons or DoctorButtons based on state
     </View>
   );
-}
+
 
 const styles = StyleSheet.create({
   container: {
