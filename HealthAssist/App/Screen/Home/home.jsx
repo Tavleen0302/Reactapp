@@ -1,22 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Doctorbuttons from './App/Screen/Doctor/Doctorbuttons';
+import Patientbuttons from './App/Screen/Patient/Patientbuttons';
 
-export default function Home({ navigation }) {
+export default function Home() {
+  const [isPatientSelected, setIsPatientSelected] = useState(false); // State to track if patient button is clicked
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to the Home Screen</Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Doctorbuttons')}
+        onPress={() => setIsPatientSelected(false)} // Set patient selection to false when doctor button is clicked
       >
         <Text style={styles.buttonText}>I'm a Medical Professional</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.button, { backgroundColor: 'blue' }]} // Example of different button style
-        onPress={() => navigation.navigate('Patientbuttons')}
+        style={[styles.button, { backgroundColor: 'blue' }]}
+        onPress={() => setIsPatientSelected(true)} // Set patient selection to true when patient button is clicked
       >
         <Text style={styles.buttonText}>I'm a Patient</Text>
       </TouchableOpacity>
+      {isPatientSelected ? <PatientButtons /> : <DoctorButtons />} // Conditionally render PatientButtons or DoctorButtons based on state
     </View>
   );
 }
@@ -28,19 +33,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 12,
-    marginBottom: 30,
+    fontSize: 24,
+    marginBottom: 20,
   },
   button: {
-    backgroundColor: 'green', // Default button color
+    backgroundColor: 'green',
     paddingVertical: 10,
-    paddingHorizontal: 50,
+    paddingHorizontal: 20,
     borderRadius: 5,
-    marginBottom: 30,
+    marginBottom: 10,
   },
   buttonText: {
     color: 'white',
-    fontSize: 12,
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });
