@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'; // Import Image component
 
 export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
-      <Image source={require('./assets/output-onlinepngtools.png')} style={styles.image} /> {/* Add Image component */}
+      <Image source={require('HealthAssist/assets/output-onlinepngtools.png')} style={styles.image} /> {/* Add Image component */}
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Doctorbuttons')}
@@ -42,5 +42,10 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 12,
     fontWeight: 'bold',
+  },
+  image: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
   },
 });
