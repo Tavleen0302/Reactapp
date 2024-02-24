@@ -28,19 +28,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 24,
-    marginBottom: 20,
+    fontSize: 12,
+    marginBottom: 30,
   },
   button: {
     backgroundColor: 'green', // Default button color
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
-    marginBottom: 10,
+    marginBottom: 30,
   },
   buttonText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: 'bold',
   },
 });
