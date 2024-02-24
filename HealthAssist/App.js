@@ -1,8 +1,8 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Image } from 'react-native';
-import PatientSignUp from './Apps/Screens/PatientSignLoginButtons/PatientSignUpForm';
-import PatientLogin from './Apps/Screens/PatientSignLoginButtons/PatientLoginForm';
+import PatientSignUp from './App/Screen/Patient/PatientSignUp';
+import PatientLogin from './App/Screen/Patient/PatientLogin';
 
 export default function App() {
   return (
