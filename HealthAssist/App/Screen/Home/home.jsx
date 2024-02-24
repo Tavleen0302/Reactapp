@@ -4,17 +4,19 @@ import { View, Text, Button } from 'react-native';
 export default function Home({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Welcome to the Home Screen</Text>
-      <View style={{ marginTop: 20 }}>
+      <View style={{ flex: 1, justifyContent: 'center' }}>
+        <Text>Welcome to the Home Screen</Text>
+      </View>
+      <View style={{ marginBottom: 50 }}>
         <Button
-          title="I'm a Medical Professional"
-          onPress={() => navigation.navigate('Doctorbuttons')}
+          title="Medical Professional"
+          onPress={() => navigation.navigate('buttons')}
         />
       </View>
-      <View style={{ marginTop: 10 }}>
+      <View style={{ marginBottom: 20 }}>
         <Button
-          title="I'm a Patient"
-          onPress={() => navigation.navigate('Patientbuttons')}
+          title="Patient"
+          onPress={() => navigation.navigate('buttons')}
         />
       </View>
     </View>
