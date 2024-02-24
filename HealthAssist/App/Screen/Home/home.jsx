@@ -1,27 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Doctorbuttons from './App/Screen/Doctor/Doctorbuttons';
-import Patientbuttons from './App/Screen/Patient/Patientbuttons';
 
-export default function Home() {
-  const [isPatientSelected, setIsPatientSelected] = useState(false); // State to track if patient button is clicked
-
+export default function Home({ setScreen }) {
   return (
     <View style={styles.container}>
-      <Image source={require('./assets/output-onlinepngtools.png')} style={styles.image} /> {/* Add Image component */}
+      <Text style={styles.title}>Welcome to the Home Screen</Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => setIsPatientSelected(false)} // Set patient selection to false when doctor button is clicked
+        onPress={() => setScreen('Doctorbuttons')} // Change to Doctorbuttons screen when the button is pressed
       >
         <Text style={styles.buttonText}>I'm a Medical Professional</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.button, { backgroundColor: 'blue' }]}
-        onPress={() => setIsPatientSelected(true)} // Set patient selection to true when patient button is clicked
+        onPress={() => setScreen('Patientbuttons')} // Change to Patientbuttons screen when the button is pressed
       >
         <Text style={styles.buttonText}>I'm a Patient</Text>
       </TouchableOpacity>
-      {isPatientSelected ? <PatientButtons /> : <DoctorButtons />} // Conditionally render PatientButtons or DoctorButtons based on state
     </View>
   );
 }
