@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to the Home Screen</Text>
+      <Image source={require('./assets/output-onlinepngtools.png')} style={styles.image} /> {/* Add Image component */}
       <TouchableOpacity
         style={styles.button}
         onPress={() => setIsPatientSelected(false)} // Set patient selection to false when doctor button is clicked
