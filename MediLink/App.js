@@ -10,7 +10,7 @@ export default function App() {
       <View style={styles.imageContainer}>
         <View style={styles.bubble} />
         <Image
-          source={require('./assets/logo.jpeg')}
+          source={require('./assets/logo.png')}
           style={styles.image}
         />
       </View>
