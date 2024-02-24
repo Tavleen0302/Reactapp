@@ -19,7 +19,7 @@ export default function Home({ setScreen }) {
       </TouchableOpacity>
     </View>
   );
-
+}
 
 const styles = StyleSheet.create({
   container: {
