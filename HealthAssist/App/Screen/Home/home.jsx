@@ -3,20 +3,20 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default function Home({ navigation }) {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Welcome to the Home Screen</Text>
-      <View style={{ marginTop: 20 }}>
-        <Button
-          title="I'm a Medical Professional"
-          onPress={() => navigation.navigate('Doctorbuttons')}
-        />
-      </View>
-      <View style={{ marginTop: 10 }}>
-        <Button
-          title="I'm a Patient"
-          onPress={() => navigation.navigate('Patientbuttons')}
-        />
-      </View>
+    <View style={styles.container}>
+      <Text style={styles.title}>Welcome to the Home Screen</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('Doctorbuttons')}
+      >
+        <Text style={styles.buttonText}>I'm a Medical Professional</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: 'blue' }]} // Example of different button style
+        onPress={() => navigation.navigate('Patientbuttons')}
+      >
+        <Text style={styles.buttonText}>I'm a Patient</Text>
+      </TouchableOpacity>
     </View>
   );
 }
