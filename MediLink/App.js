@@ -9,10 +9,6 @@ export default function App() {
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <View style={styles.bubble} />
-        <Image
-          source={require('./assets/logo.png')}
-          style={styles.image}
-        />
       </View>
       <View style={styles.buttonContainer}>
         <PatientLogin />
