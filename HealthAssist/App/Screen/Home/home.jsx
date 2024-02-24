@@ -1,22 +1,22 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'; // Import Image component
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <Image source={require('HealthAssist/assets/output-onlinepngtools.png')} style={styles.image} /> {/* Add Image component */}
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate('Doctorbuttons')}
+        onPress={() => setIsPatientSelected(false)} // Set patient selection to false when doctor button is clicked
       >
         <Text style={styles.buttonText}>I'm a Medical Professional</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.button, { backgroundColor: 'blue' }]} // Example of different button style
-        onPress={() => navigation.navigate('Patientbuttons')}
+        style={[styles.button, { backgroundColor: 'blue' }]}
+        onPress={() => setIsPatientSelected(true)} // Set patient selection to true when patient button is clicked
       >
         <Text style={styles.buttonText}>I'm a Patient</Text>
       </TouchableOpacity>
+      {isPatientSelected ? <PatientButtons /> : <DoctorButtons />} // Conditionally render PatientButtons or DoctorButtons based on state
     </View>
   );
 }
@@ -28,19 +28,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 25,
-    marginBottom: 30,
+    fontSize: 24,
+    marginBottom: 20,
   },
   button: {
-    backgroundColor: 'green', // Default button color
+    backgroundColor: 'green',
     paddingVertical: 10,
-    paddingHorizontal: 50,
+    paddingHorizontal: 20,
     borderRadius: 5,
-    marginBottom: 30,
+    marginBottom: 10,
   },
   buttonText: {
     color: 'white',
-    fontSize: 12,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   image: {
