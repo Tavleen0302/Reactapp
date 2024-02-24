@@ -5,6 +5,7 @@ export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to the Home Screen</Text>
+      <Image source={require('./assets/output-onlinepngtools.png')} style={styles.image} />
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Doctorbuttons')}
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 12,
+    fontSize: 25,
     marginBottom: 30,
   },
   button: {
