@@ -8,13 +8,13 @@ export default function Home({ navigation }) {
       <View style={{ marginTop: 20 }}>
         <Button
           title="I'm a Medical Professional"
-          onPress={() => navigation.navigate('DoctorScreen')}
+          onPress={() => navigation.navigate('DocButton')}
         />
       </View>
       <View style={{ marginTop: 10 }}>
         <Button
           title="I'm a Patient"
-          onPress={() => navigation.navigate('PatientScreen')}
+          onPress={() => navigation.navigate('PatientButton')}
         />
       </View>
     </View>
