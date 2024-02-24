@@ -4,7 +4,6 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to the Home Screen</Text>
       <Image source={require('./assets/output-onlinepngtools.png')} style={styles.image} /> {/* Add Image component */}
       <TouchableOpacity
         style={styles.button}
