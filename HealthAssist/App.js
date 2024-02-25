@@ -11,6 +11,7 @@ import Doctorsignup from './App/Screen/Doctor/Doctorsignup';
 import Patientfindloc from './App/Screen/Patient/Patientfindloc';
 import PatientsDoctorList from './App/Screen/Patient/PatientsDoctorList';
 import DoctorAppointments from './App/Screen/Doctor/DoctorAppointments';
+import UserProfileUpdate from './App/Screen/Patient/Personal';
 
 
 export default function App() {
@@ -42,7 +43,8 @@ export default function App() {
         return <PatientsDoctorList setScreen={handleScreenChange} />;
       case 'DoctorAppointments':
         return <DoctorAppointments setScreen={handleScreenChange} />;
-      
+      case 'UserProfileUpdate':
+        return <UserProfileUpdate setScreen={handleScreenChange} />;
       default:
         return <Home setScreen={handleScreenChange} />;
     }

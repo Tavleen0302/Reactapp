@@ -43,6 +43,28 @@ app.get('/nearbyDoctors', async (req, res) => {
     }
 });
 
+app.get('/profile', async (req, res) => {
+    try {
+        // Retrieve user ID from the request object
+        const userId = req.user.id;
+
+        // Query MongoDB to find the user by ID
+        const user = await User.findById(userId);
+
+        // Check if user exists
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Return user data
+        res.status(200).json(user);
+    } catch (error) {
+        console.error('Error fetching user profile:', error);
+        res.status(500).json({ message: 'Failed to fetch user profile' });
+    }
+});
+
+
 
 // Route to get all users
 app.get('/profs', async (req, res) => { 
@@ -126,10 +148,11 @@ app.post('/register', async (req, res) => {
 });
 
 // Route to update user information
+// Route to update user information
 app.post('/updateUser', async (req, res) => {
     try {
-        const { userId } = req;
-        const { fullName, email, healthCard, phoneNumber, medicalInfo } = req.body;
+        const { fullName, email, password, healthCard, phoneNumber, medicalInfo } = req.body;
+        const userId = req.user.id; // Assuming userId is available from authentication middleware
         
         // Find the user by ID
         const user = await User.findById(userId);
@@ -140,6 +163,7 @@ app.post('/updateUser', async (req, res) => {
         // Update user information
         if (fullName) user.fullName = fullName;
         if (email) user.email = email;
+        if (password) user.password = password;
         if (healthCard) user.healthCard = healthCard;
         if (phoneNumber) user.phoneNumber = phoneNumber;
         if (medicalInfo) user.medicalInfo = medicalInfo;

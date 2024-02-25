@@ -7,6 +7,10 @@ export default function PatientLogin({setScreen}) {
 
   const handleSubmit = () => {
     // Validate email and password here if needed
+    if (!email || !password) {
+      Alert.alert('Error', 'Please enter your email and password');
+      return;
+    }
     const data = {
       email: email,
       password: password,
@@ -49,7 +53,7 @@ export default function PatientLogin({setScreen}) {
           value={password}
           onChangeText={setPassword}
           placeholder="Enter your password"
-          secureTextEntry={true}
+          secureTextEntry={false}
           maxLength={40}
         />
       </View>

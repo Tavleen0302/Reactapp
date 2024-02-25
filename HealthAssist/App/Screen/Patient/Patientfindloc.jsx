@@ -33,7 +33,7 @@ export default function Patientfindloc({ setScreen }) {
         contact: selectedContact,
         chosenDate: selectedDate,
     };
-    setScreen('PatientsDoctorList');
+    setScreen('UserProfileUpdate');
   
     
   };
