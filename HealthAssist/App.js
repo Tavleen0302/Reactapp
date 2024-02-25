@@ -5,6 +5,10 @@ import Home from './App/Screen/Home/home';
 import Patientbuttons from './App/Screen/Patient/Patientbuttons';
 import PatientLogin from './App/Screen/Patient/PatientLogin';
 import PatientSignUp from './App/Screen/Patient/PatientSignUp';
+import Doctorbuttons from './App/Screen/Doctor/Doctorbuttons';
+import Doctorlogin from './App/Screen/Doctor/Doctorlogin';
+import Doctorsignup from './App/Screen/Doctor/Doctorsignup';
+
 
 export default function App() {
   const [screen, setScreen] = useState('Home');
@@ -23,10 +27,18 @@ export default function App() {
         return <PatientLogin setScreen={handleScreenChange} />;
       case 'PatientSignUp':
         return <PatientSignUp setScreen={handleScreenChange} />;
+      case 'Doctorbuttons':
+        return <Doctorbuttons setScreen={handleScreenChange} />;
+      case 'Doctorlogin':
+        return <Doctorlogin setScreen={handleScreenChange} />;
+      case 'Doctorsignup':
+        return <Doctorsignup setScreen={handleScreenChange} />;
       default:
         return <Home setScreen={handleScreenChange} />;
     }
   };
+
+  
 
   return (
     <View style={styles.container}>
