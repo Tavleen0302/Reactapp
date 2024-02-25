@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, TextInput, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
+import axios from 'axios';
 
-export default function Doctorsignup2() {
+export default function Doctorsignup2({ setScreen}) {
   const [medicalLicense, setMedicalLicense] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [locationOfPractice, setLocationOfPractice] = useState('');
@@ -23,15 +24,46 @@ export default function Doctorsignup2() {
   };
 
   const handleSubmit = () => {
-    console.log('Form submitted:', {
-      medicalLicense,
-      phoneNumber,
-      locationOfPractice,
-      fullName,
-      email,
-      password,
-      confirmPassword,
-    });
+    if (!fullName || !email || !phoneNumber || !locationOfPractice || !password || !confirmPassword) {
+      Alert.alert('Error', 'Please fill in all details');
+      return;
+    }
+    if (password !== confirmPassword) {
+      Alert.alert('Error', 'Passwords do not match');
+      return;
+    }
+    if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
+      Alert.alert('Error', 'Please enter a valid phone number');
+      return;
+    }
+
+    const data = {
+      //medicalLicense,
+      phoneNumber: phoneNumber,
+      locationOfPractice: locationOfPractice,
+      fullName: fullName,
+      email: email,
+      password: password,
+    };
+    // Send data to backend
+    console.log(data);
+    axios.post('http://localhost:8000/registerProf', data).then((response) => {
+      console.log(response.data);
+      Alert.alert('Success', 'You have signed up successfully');
+      setPhoneNumber('');
+      setLocationOfPractice('');
+      setFullName('');
+      setEmail('');
+      setPassword('');
+      setScreen('DoctorAppointments')
+    }
+    ).catch((error) => {
+      console.error('There was an error!', error);
+      Alert.alert('Error', 'There was an error signing up');
+    }
+    );
+  
+  
   };
 
   return (

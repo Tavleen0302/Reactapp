@@ -22,8 +22,7 @@ export default function PatientLogin({setScreen}) {
       setScreen('Patientfindloc');
     } ).catch((error) => {
       console.error('There was an error!', error);
-      Alert.alert('Error', 'There was an error logging in');
-    }
+      Alert.alert('Failure', 'Your email or password is incorrect. Please try again.');    }
     );
   };
 

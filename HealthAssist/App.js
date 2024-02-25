@@ -9,8 +9,8 @@ import Doctorbuttons from './App/Screen/Doctor/Doctorbuttons';
 import Doctorlogin from './App/Screen/Doctor/Doctorlogin';
 import Doctorsignup from './App/Screen/Doctor/Doctorsignup';
 import Patientfindloc from './App/Screen/Patient/Patientfindloc';
-import PatientDoctorList from './App/Screen/Patient/PatientsDoctorList';
-
+import PatientsDoctorList from './App/Screen/Patient/PatientsDoctorList';
+import DoctorAppointments from './App/Screen/Doctor/DoctorAppointments';
 
 
 export default function App() {
@@ -40,6 +40,9 @@ export default function App() {
         return <Patientfindloc setScreen={handleScreenChange} />;
       case 'PatientsDoctorList':
         return <PatientsDoctorList setScreen={handleScreenChange} />;
+      case 'DoctorAppointments':
+        return <DoctorAppointments setScreen={handleScreenChange} />;
+      
       default:
         return <Home setScreen={handleScreenChange} />;
     }

@@ -41,6 +41,43 @@ export default function PatientSignUp({ setScreen }) {
   const handleSubmit = () => {
     // Your form submission logic here
     // This function is responsible for submitting the form data to the server
+    if (!fullName || !phoneNumber || !email || !password || !confirmPassword) 
+    {
+      Alert.alert('Error', 'Please fill in all details');
+      return;
+    }
+    if (password !== confirmPassword)
+    {
+      Alert.alert('Error', 'Passwords do not match');
+      return;
+    }
+    if (phoneNumber.length !== 10 || isNaN(phoneNumber))
+    {
+      Alert.alert('Error', 'Please enter a valid phone number');
+      return;
+    }
+    
+    const data = {
+      fullName: fullName,
+      phoneNumber: phoneNumber,
+      email: email,
+      password: password,
+    }
+    console.log(data);
+    axios.post('http://localhost:8000/register', data).then((response) => {
+      console.log(response.data);
+      Alert.alert('Success', 'You have signed up successfully');
+      setFullName('');
+      setPhoneNumber('');
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+      setScreen('Patientfindloc');
+    }).catch((error) => {
+      console.error('There was an error!', error);
+      Alert.alert('Error', 'There was an error signing up');
+    });
+
   };
 
   return (
@@ -84,7 +121,7 @@ export default function PatientSignUp({ setScreen }) {
           value={password}
           onChangeText={text => setPassword(text)}
           placeholder="Enter your password"
-          secureTextEntry={true}
+          secureTextEntry={false}
           maxLength={20}
         />
       </View>
@@ -95,7 +132,7 @@ export default function PatientSignUp({ setScreen }) {
           value={confirmPassword}
           onChangeText={text => setConfirmPassword(text)}
           placeholder="Confirm your password"
-          secureTextEntry={true}
+          secureTextEntry={false}
           maxLength={20}
         />
       </View>

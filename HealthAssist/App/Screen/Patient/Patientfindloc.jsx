@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, Button } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-import axios from 'axios';
+//import axios from 'axios';
 
 export default function Patientfindloc({ setScreen }) {
   const [selectedProfessional, setSelectedProfessional] = useState('');
@@ -33,19 +33,8 @@ export default function Patientfindloc({ setScreen }) {
         contact: selectedContact,
         chosenDate: selectedDate,
     };
-    axios.post('http://localhost:8000/updateUser', userData)
-      .then((response) => {
-        console.log(response.data);
-        Alert.alert('Success', 'Appointment scheduled successfully');
-        setSelectedProfessional('');
-        setSelectedContact('');
-        setSelectedDate('');
-        setScreen('PatientsDoctorList');
-      })
-      .catch((error) => {
-        console.error('There was an error!', error);
-        Alert.alert('Error', 'There was an error scheduling the appointment');
-      });
+    setScreen('PatientsDoctorList');
+  
     
   };
 

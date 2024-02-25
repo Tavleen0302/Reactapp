@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken'); // Import JWT module
 
+
 const app = express();
 const port = 8000;
 const cors = require('cors');
@@ -22,22 +23,91 @@ mongoose.connect('mongodb+srv://tavleen0302:Tavbasket123!@cluster0.kmul6mq.mongo
 
 // Import User model
 const User = require('./models/user');
+const Prof = require('./models/profs');
+const Appointment = require('./models/apppoint');
 
-// Function to generate JWT token
-function generateToken(user) {
-    return jwt.sign({ id: user._id }, 'your_secret_key', { expiresIn: '1h' }); // Change 'your_secret_key' to your own secret key
-}
+
+// Assuming you already have a route set up for fetching doctors
+
+app.get('/nearbyDoctors', async (req, res) => {
+    try {
+        const { contactType } = req.query; // Assuming the patient's contact preference is passed in the query
+
+        // Query doctors from the database based on contactType
+        const doctors = await Appointment.find({ contactType });
+
+        res.status(200).json({ doctors });
+    } catch (error) {
+        console.error('Error fetching nearby doctors:', error);
+        res.status(500).json({ message: 'Failed to fetch doctors' });
+    }
+});
+
+
+// Route to get all users
+app.get('/profs', async (req, res) => { 
+    try {
+        const profs = await Prof.find();
+        res.status(200).json(profs);
+    } catch (err) {
+        console.log("Error getting professionals", err);
+        res.status(500).json({ message: "Failed to get professionals" });
+    }
+});
+
+// Route to register a new professional
+app.post('/registerProf', async (req, res) => {
+    try {
+        const { fullName, email, password, medicalLicense, phoneNumber, locationOfPractice } = req.body;    
+        const existingProf = await Prof.findOne({ email });
+        if (existingProf) {
+            return res.status(400).json({ message: "Professional already exists" });
+        }
+        const prof = new Prof({
+            fullName,
+            email,
+            password,
+            medicalLicense,
+            phoneNumber,
+            locationOfPractice,
+        });
+        await prof.save();
+        res.status(200).json({ message: "Professional registered" });
+    } catch (err) {
+        console.log("Error registering professional", err);
+        res.status(500).json({ message: "Registration failed" });
+    }
+});
+
+// Route to login an existing professional
+app.post('/loginProf', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const prof = await Prof.findOne({ email });
+        if (!prof || prof.password !== password) {
+            return res.status(400).json({ message: "Invalid email or password" });
+        }
+        res.status(200).json({ message: "Login successful" });
+    } catch (err) {
+        console.log("Error logging in", err);
+        res.status(500).json({ message: "Login failed" });
+    }
+});
+
+
+
+
 
 // Route to register a new user
 app.post('/register', async (req, res) => {
     try {
-        const { name, email, password, healthCard, phoneNumber, medicalInfo } = req.body;
+        const { fullName, email, password, healthCard, phoneNumber, medicalInfo } = req.body;
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: "User already exists" });
         }
         const user = new User({
-            name,
+            fullName,
             email,
             password,
             healthCard,
@@ -46,10 +116,8 @@ app.post('/register', async (req, res) => {
         });
         await user.save();
         
-        // Generate token for the new user
-        const token = generateToken(user);
         
-        res.status(200).json({ message: "User registered", token });
+        res.status(200).json({ message: "User registered"});
 
     } catch (err) {
         console.log("Error registering user", err);
@@ -58,10 +126,10 @@ app.post('/register', async (req, res) => {
 });
 
 // Route to update user information
-app.post('/updateUser', verifyToken, async (req, res) => {
+app.post('/updateUser', async (req, res) => {
     try {
         const { userId } = req;
-        const { name, email, healthCard, phoneNumber, medicalInfo } = req.body;
+        const { fullName, email, healthCard, phoneNumber, medicalInfo } = req.body;
         
         // Find the user by ID
         const user = await User.findById(userId);
@@ -70,7 +138,7 @@ app.post('/updateUser', verifyToken, async (req, res) => {
         }
 
         // Update user information
-        if (name) user.name = name;
+        if (fullName) user.fullName = fullName;
         if (email) user.email = email;
         if (healthCard) user.healthCard = healthCard;
         if (phoneNumber) user.phoneNumber = phoneNumber;
@@ -96,9 +164,8 @@ app.post('/login', async (req, res) => {
         }
         
         // Generate token for the logged-in user
-        const token = generateToken(user);
         
-        res.status(200).json({ message: "Login successful", token });
+        res.status(200).json({ message: "Login successful"});
 
     } catch (err) {
         console.log("Error logging in", err);
@@ -106,25 +173,9 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Middleware to verify token
-function verifyToken(req, res, next) {
-    const token = req.headers.authorization;
-    if (!token) {
-        return res.status(401).json({ message: "Unauthorized" });
-    }
-    jwt.verify(token, 'your_secret_key', (err, decoded) => {
-        if (err) {
-            return res.status(401).json({ message: "Invalid token" });
-        }
-        req.userId = decoded.id;
-        next();
-    });
-}
 
-// Protected route that requires authentication
-app.get('/protected', verifyToken, (req, res) => {
-    res.status(200).json({ message: "Protected route accessed" });
-});
+
+
 
 app.listen(port, () => {
     console.log('Server is running on port:', port);

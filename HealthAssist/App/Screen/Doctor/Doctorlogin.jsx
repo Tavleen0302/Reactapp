@@ -1,15 +1,30 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-
-export default function Doctorlogin() {
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
+import axios from 'axios';
+export default function Doctorlogin({setScreen}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = () => {
-    console.log('Form submitted:', {
-      email,
-      password,
-    });
+    // Validate email and password here if needed
+    const data = {
+      email: email,
+      password: password,
+    };
+    // Send data to backend
+    axios.post('http://localhost:8000/loginProf', data). then((response) => {
+    // Navigate to the DoctorAppointments page
+      console.log(response.data);
+      Alert.alert('Success', 'You have logged in successfully');
+      setEmail('');
+      setPassword('');
+      setScreen('DoctorAppointments');
+    }
+    ).catch((error) => {
+      console.error('There was an error!', error);
+      Alert.alert('Failure', 'Your email or password is incorrect. Please try again.');
+    }
+    );
   };
 
   return (
