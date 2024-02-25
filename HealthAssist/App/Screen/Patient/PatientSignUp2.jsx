@@ -1,18 +1,34 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
+import axios from 'axios';
 
-export default function PatientSignUp2({ navigation }) {
+export default function PatientSignUp2({ setScreen, route }) {
   const [healthCard, setHealthCard] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [medicalInfo, setMedicalInfo] = useState('');
 
   const handleSubmit = () => {
-    console.log('Form submitted:', {
-      healthCard,
-      phoneNumber,
-      medicalInfo,
-    });
-    // Add logic to handle form submission, such as navigating to the next page
+    const userDataWithAdditionalInfo = {
+      healthCard: healthCard,
+      phoneNumber: phoneNumber,
+      medicalInfo: medicalInfo,
+    };
+
+    axios.post('http://localhost:8000/updateUser', userDataWithAdditionalInfo)
+      .then((response) => {
+        console.log(response.data);
+        Alert.alert('Success', 'You have registered successfully');
+        setHealthCard('');
+        setPhoneNumber('');
+        setMedicalInfo('');
+        // Navigate to the next page
+        // Assuming there's a screen called Patientfindloc
+        setScreen('Patientfindloc');
+      })
+      .catch((error) => {
+        console.error('There was an error!', error);
+        Alert.alert('Error', 'There was an error registering the user');
+      });
   };
 
   return (
