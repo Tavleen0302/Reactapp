@@ -2,19 +2,19 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
+        required: false,
         min: 6,
         max: 255
     },
     email: {
         type: String,
-        required: true,
+        required: false,
         min: 6,
         max: 255
     },
     password: {
         type: String,
-        required: true,
+        required: false,
         min: 6,
         max: 1024
     },
@@ -22,42 +22,39 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }, 
-    healthCardNumber: {
+    healthCard: {
         type: String,
-        required: true,
+        required: false,
         min: 6,
         max: 255
     },
     phoneNumber: {
-        type: String,
-        required: true,
+        type: Number,
+        required: false,
         min: 6,
         max: 255
     },
-    photo: {
+    medicalInfo: {
         type: String,
-        required: true,
+        required: false,
+        min: 6,
+        max: 255
+    }, 
+    chosenDate: {
+        type: Date,
+        required: false
+    },
+    chosenTime: {
+        type: String,
+        required: false
+    },
+    doctor: {
+        type: String,
+        required: false,
         min: 6,
         max: 255
     },
-    medicalInfoAttachment: {
-        type: String,
-        required: true,
-        min: 6,
-        max: 255
-    },
-    dateOfBirth: {
-        type: String,
-        required: true,
-        min: 6,
-        max: 255
-    },
-    address: {
-        type: String,
-        required: true,
-        min: 6,
-        max: 255
-    }
+
 });
 
 const User = mongoose.model('User', userSchema);
