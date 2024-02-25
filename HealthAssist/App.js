@@ -9,6 +9,8 @@ import Doctorbuttons from './App/Screen/Doctor/Doctorbuttons';
 import Doctorlogin from './App/Screen/Doctor/Doctorlogin';
 import Doctorsignup from './App/Screen/Doctor/Doctorsignup';
 import Patientfindloc from './App/Screen/Patient/Patientfindloc';
+import Doctorsignup2 from './App/Screen/Doctor/Doctorsignup2';
+import PatientSignUp2 from './App/Screen/Patient/PatientSignUp2';
 
 export default function App() {
   const [screen, setScreen] = useState('Home');
@@ -35,6 +37,10 @@ export default function App() {
         return <Doctorsignup setScreen={handleScreenChange} />;
       case 'Patientfindloc':
         return <Patientfindloc setScreen={handleScreenChange} />;
+      case 'Doctorsignup2':
+        return <Doctorsignup2 setScreen={handleScreenChange} />;
+      case 'PatientSignUp2':
+        return <PatientSignUp2 setScreen={handleScreenChange} />;
       default:
         return <Home setScreen={handleScreenChange} />;
     }
