@@ -4,7 +4,7 @@ import { ScrollView, View, Text, TouchableOpacity, StyleSheet, Alert } from 'rea
 export default function PatientAppointments({ setScreen }) {
   // Sample data for nearby doctors and their availability
   const nearbyDoctors = [
-    { id: 1, name: 'Dr. John Doe', rating: 4.5, availability: ['9:00 AM - 10:00 AM', '2:00 PM - 4:00 PM'] },
+    { id: 1, name: 'John Doe', rating: 4.5, availability: ['9:00 AM - 10:00 AM', '2:00 PM - 4:00 PM'] },
   ];
 
   const [selectedDoctor, setSelectedDoctor] = useState(null);
