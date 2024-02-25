@@ -28,15 +28,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 24,
-    marginBottom: 20,
+    fontSize: 36, // Increase font size to make it bigger
+    marginBottom: 40, // Increase marginBottom to move it lower
   },
   button: {
     backgroundColor: 'green',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
-    marginBottom: 10,
+    marginBottom: 20, // Increase marginBottom to move the buttons lower
   },
   buttonText: {
     color: 'white',
