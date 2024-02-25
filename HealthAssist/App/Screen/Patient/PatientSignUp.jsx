@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 
-export default function PatientSignUp() {
+export default function PatientSignUp({setScreen}) {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const handleSubmit = () => {
+    console.log('Form submitted:', {
+      fullName,
+      email,
+      password,
+      confirmPassword,
+    });
+    setScreen('PatientSignUp2');
+};
 
 
   return (
@@ -55,7 +64,7 @@ export default function PatientSignUp() {
         />
       </View>
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Submit</Text>
+        <Text style={styles.buttonText}>Next Page</Text>
       </TouchableOpacity>
     </ScrollView>
   );
