@@ -1,44 +1,46 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import axios from 'axios';
+import * as DocumentPicker from 'expo-document-picker';
 
 export default function PatientSignUp({ setScreen }) {
   const [fullName, setFullName] = useState('');
-  const [healthCard, setHealthCard] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [medicalInfo, setMedicalInfo] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  // State for uploaded health card and medical info
+  const [healthCardURI, setHealthCardURI] = useState('');
+  const [medicalInfoURI, setMedicalInfoURI] = useState('');
+
+  // Function to handle health card upload
+  const handleHealthCardPick = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync();
+      if (result.type === 'success') {
+        setHealthCardURI(result.uri);
+      }
+    } catch (error) {
+      console.log('Error picking health card: ', error);
+    }
+  };
+
+  // Function to handle medical info upload
+  const handleMedicalInfoPick = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync();
+      if (result.type === 'success') {
+        setMedicalInfoURI(result.uri);
+      }
+    } catch (error) {
+      console.log('Error picking medical info: ', error);
+    }
+  };
+
   const handleSubmit = () => {
-    const userData = {
-      name: fullName,
-      healthCard: healthCard,
-      phoneNumber: phoneNumber,
-      medicalInfo: medicalInfo,
-      email: email,
-      password: password,
-    };
-    axios.post('http://localhost:8000/register', userData)
-      .then((response) => {
-        console.log(response.data);
-        Alert.alert('Success', 'You have registered successfully');
-        setFullName('');
-        setHealthCard('');
-        setPhoneNumber('');
-        setMedicalInfo('');
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
-        // Navigate to the next page
-        // Assuming there's a screen called Patientfindloc
-        setScreen('Patientfindloc');
-      })
-      .catch((error) => {
-        console.error('There was an error!', error);
-        Alert.alert('Error', 'There was an error registering the user');
-      });
+    // Your form submission logic here
+    // This function is responsible for submitting the form data to the server
   };
 
   return (
@@ -54,16 +56,6 @@ export default function PatientSignUp({ setScreen }) {
         />
       </View>
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Health Card</Text>
-        <TextInput
-          style={styles.input}
-          value={healthCard}
-          onChangeText={text => setHealthCard(text)}
-          placeholder="Upload Health Card"
-          maxLength={20}
-        />
-      </View>
-      <View style={styles.inputContainer}>
         <Text style={styles.label}>Phone Number</Text>
         <TextInput
           style={styles.input}
@@ -71,16 +63,6 @@ export default function PatientSignUp({ setScreen }) {
           onChangeText={text => setPhoneNumber(text)}
           placeholder="Enter your phone number"
           keyboardType="phone-pad"
-          maxLength={20}
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Medical Info</Text>
-        <TextInput
-          style={styles.input}
-          value={medicalInfo}
-          onChangeText={text => setMedicalInfo(text)}
-          placeholder="Upload Medical Info"
           maxLength={20}
         />
       </View>
@@ -102,7 +84,7 @@ export default function PatientSignUp({ setScreen }) {
           value={password}
           onChangeText={text => setPassword(text)}
           placeholder="Enter your password"
-          secureTextEntry={false}
+          secureTextEntry={true}
           maxLength={20}
         />
       </View>
@@ -113,10 +95,18 @@ export default function PatientSignUp({ setScreen }) {
           value={confirmPassword}
           onChangeText={text => setConfirmPassword(text)}
           placeholder="Confirm your password"
-          secureTextEntry={false}
+          secureTextEntry={true}
           maxLength={20}
         />
       </View>
+      <TouchableOpacity style={styles.uploadButton} onPress={handleHealthCardPick}>
+        <Text style={styles.buttonText}>Upload Health Card</Text>
+      </TouchableOpacity>
+      {healthCardURI ? <Text>{healthCardURI}</Text> : null}
+      <TouchableOpacity style={styles.uploadButton} onPress={handleMedicalInfoPick}>
+        <Text style={styles.buttonText}>Upload Medical Info</Text>
+      </TouchableOpacity>
+      {medicalInfoURI ? <Text>{medicalInfoURI}</Text> : null}
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
@@ -130,7 +120,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    marginTop:20,
+    marginTop: 20,
+    backgroundColor: '#f0f8ff', // Light blue background color
   },
   inputContainer: {
     width: '100%',
@@ -148,15 +139,24 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
   },
-  button: {
-    backgroundColor: 'blue',
-    padding: 15,
+  uploadButton: {
+    backgroundColor: '#007bff',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 5,
-    marginTop: -5,
+    marginTop: 10,
+    backgroundColor: '#007bff', // Blue button color
   },
   buttonText: {
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  button: {
+    backgroundColor: '#4CAF50', // Change button color to green
+    padding: 15,
+    borderRadius: 5,
+    marginTop: 10,
   },
 });
