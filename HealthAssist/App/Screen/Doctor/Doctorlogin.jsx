@@ -19,7 +19,7 @@ export default function Doctorlogin() {
         <TextInput
           style={styles.input}
           value={email}
-          onChangeText={text => setEmail(text.slice(0, 50))}
+          onChangeText={text => setEmail(text.slice(0, 40))}
           placeholder="Enter your email"
           keyboardType="email-address"
           maxLength={40}
@@ -30,7 +30,7 @@ export default function Doctorlogin() {
         <TextInput
           style={styles.input}
           value={password}
-          onChangeText={text => setPassword(text.slice(0, 20))}
+          onChangeText={text => setPassword(text.slice(0, 40))}
           placeholder="Enter your password"
           secureTextEntry={false}
           maxLength={40}
