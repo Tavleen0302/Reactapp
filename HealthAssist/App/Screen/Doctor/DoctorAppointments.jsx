@@ -3,14 +3,9 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 
 export default function DoctorAppointments({ setScreen }) {
   // Sample data for past and current appointments
-  const pastAppointments = [
-    { patientName: 'John Doe', appointmentDate: '2023-10-15', appointmentTime: '10:00 AM' },
-    { patientName: 'Jane Smith', appointmentDate: '2023-09-20', appointmentTime: '11:30 AM' },
-  ];
-
+  const pastAppointments = [];
   const currentAppointments = [
-    { patientName: 'Alice Johnson', appointmentDate: '2023-11-05', appointmentTime: '09:00 AM' },
-    { patientName: 'Bob Brown', appointmentDate: '2023-11-10', appointmentTime: '03:00 PM' },
+    { patientName: 'Alice Cooper', appointmentDate: '2028-11-05', appointmentTime: '09:00 AM' },
   ];
 
   const handlePersonalDocNavigation = () => {
@@ -31,12 +26,16 @@ export default function DoctorAppointments({ setScreen }) {
       {/* Past Appointments Section */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Past Appointments</Text>
-        {pastAppointments.map((appointment, index) => (
-          <View key={index} style={styles.appointment}>
-            <Text style={styles.patientName}>{appointment.patientName}</Text>
-            <Text style={styles.appointmentInfo}>{appointment.appointmentDate} at {appointment.appointmentTime}</Text>
-          </View>
-        ))}
+        {pastAppointments.length === 0 ? (
+          <Text style={styles.noAppointmentText}>None Right Now</Text>
+        ) : (
+          pastAppointments.map((appointment, index) => (
+            <View key={index} style={styles.appointment}>
+              <Text style={styles.patientName}>{appointment.patientName}</Text>
+              <Text style={styles.appointmentInfo}>{appointment.appointmentDate} at {appointment.appointmentTime}</Text>
+            </View>
+          ))
+        )}
       </View>
 
       {/* Current Appointments Section */}
@@ -100,6 +99,11 @@ const styles = StyleSheet.create({
   },
   appointmentInfo: {
     fontSize: 16,
+    color: '#666',
+  },
+  noAppointmentText: {
+    fontSize: 16,
+    textAlign: 'center',
     color: '#666',
   },
   button: {

@@ -38,7 +38,7 @@ export default function Doctorsignup2({ setScreen}) {
     }
 
     const data = {
-      //medicalLicense,
+      medicalLicense: medicalLicense,
       phoneNumber: phoneNumber,
       locationOfPractice: locationOfPractice,
       fullName: fullName,
@@ -51,6 +51,7 @@ export default function Doctorsignup2({ setScreen}) {
       console.log(response.data);
       Alert.alert('Success', 'You have signed up successfully');
       setPhoneNumber('');
+      setMedicalLicense('');
       setLocationOfPractice('');
       setFullName('');
       setEmail('');
