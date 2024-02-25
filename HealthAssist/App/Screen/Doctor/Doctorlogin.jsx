@@ -18,7 +18,7 @@ export default function Doctorlogin({setScreen}) {
       Alert.alert('Success', 'You have logged in successfully');
       setEmail('');
       setPassword('');
-      setScreen('DoctorAppointments');
+      setScreen('PersonalDoc');
     }
     ).catch((error) => {
       console.error('There was an error!', error);
