@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-export default function PatientLogin() {
+export default function PatientLogin({setScreen}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = () => {
-    console.log('Form submitted:', {
-      email,
-      password,
-    });
+    // Validate email and password here if needed
+
+    // Navigate to the Patientfindloc page
+    setScreen('Patientfindloc');
   };
 
   return (
@@ -19,7 +20,7 @@ export default function PatientLogin() {
         <TextInput
           style={styles.input}
           value={email}
-          onChangeText={text => setEmail(text.slice(0, 40))}
+          onChangeText={setEmail}
           placeholder="Enter your email"
           keyboardType="email-address"
           maxLength={40}
@@ -30,9 +31,9 @@ export default function PatientLogin() {
         <TextInput
           style={styles.input}
           value={password}
-          onChangeText={text => setPassword(text.slice(0, 40))}
+          onChangeText={setPassword}
           placeholder="Enter your password"
-          secureTextEntry={false}
+          secureTextEntry={true}
           maxLength={40}
         />
       </View>
