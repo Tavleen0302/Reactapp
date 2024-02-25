@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
-export default function Doctorsignup() {
+export default function Doctorsignup({ setScreen }) {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,6 +14,10 @@ export default function Doctorsignup() {
       password,
       confirmPassword,
     });
+    // Add logic to handle form submission, such as validation
+    
+    // Navigate to Doctorsignup2 screen
+    setScreen('Doctorsignup2');
   };
 
   return (
@@ -62,7 +66,7 @@ export default function Doctorsignup() {
         />
       </View>
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Submit</Text>
+        <Text style={styles.buttonText}>Next Page</Text>
       </TouchableOpacity>
     </ScrollView>
   );
