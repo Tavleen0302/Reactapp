@@ -10,7 +10,7 @@ export default function PatientLogin() {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={handleLoginPress} style={styles.button}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>Form</Text>
       </TouchableOpacity>
     </View>
   );

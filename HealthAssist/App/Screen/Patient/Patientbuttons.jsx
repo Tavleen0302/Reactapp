@@ -9,7 +9,7 @@ export default function Patientbuttons({ setScreen }) {
 
   const handleSignUpPress = () => {
     // Add logic to navigate to SignUp screen
-    console.log('SignUp button pressed!');
+    setScreen('PatientSignUp');
   };
 
   return (

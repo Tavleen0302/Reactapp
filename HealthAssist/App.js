@@ -3,7 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import Home from './App/Screen/Home/home';
 import Patientbuttons from './App/Screen/Patient/Patientbuttons';
-import Doctorbuttons from './App/Screen/Doctor/Doctorbuttons';
+import PatientLogin from './App/Screen/Patient/PatientLogin';
+import PatientSignUp from './App/Screen/Patient/PatientSignUp';
 
 export default function App() {
   const [screen, setScreen] = useState('Home');
@@ -12,11 +13,24 @@ export default function App() {
     setScreen(newScreen);
   };
 
+  const renderScreen = () => {
+    switch (screen) {
+      case 'Home':
+        return <Home setScreen={handleScreenChange} />;
+      case 'Patientbuttons':
+        return <Patientbuttons setScreen={handleScreenChange} />;
+      case 'PatientLogin':
+        return <PatientLogin setScreen={handleScreenChange} />;
+      case 'PatientSignUp':
+        return <PatientSignUp setScreen={handleScreenChange} />;
+      default:
+        return <Home setScreen={handleScreenChange} />;
+    }
+  };
+
   return (
     <View style={styles.container}>
-      {screen === 'Home' && <Home setScreen={handleScreenChange} />}
-      {screen === 'Patientbuttons' && <Patientbuttons setScreen={handleScreenChange} />}
-      {screen === 'Doctorbuttons' && <Doctorbuttons setScreen={handleScreenChange} />}
+      {renderScreen()}
       <StatusBar style="auto" />
     </View>
   );
