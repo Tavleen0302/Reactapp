@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 export default function Home({ setScreen }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to the Home Screen</Text>
+      <Text style={styles.title}>HealthAssist</Text>
       <TouchableOpacity
         style={styles.button}
         onPress={() => setScreen('Doctorbuttons')} // Change to Doctorbuttons screen when the button is pressed
