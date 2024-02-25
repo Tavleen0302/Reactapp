@@ -1,5 +1,6 @@
+import { set } from 'mongoose';
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 
 export default function PatientSignUp() {
   const [fullName, setFullName] = useState('');
@@ -8,13 +9,22 @@ export default function PatientSignUp() {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSubmit = () => {
-    console.log('Form submitted:', {
-      fullName,
-      email,
-      password,
-      confirmPassword,
-    });
-  };
+    const data = {
+      fullName: fullName,
+      email: email,
+      password: password,    
+    };
+    axios.post('http://localhost:3000/api/patient/register', data).then((response) => {
+      console.log(response);
+      Alert.alert('User registered successfully');
+      setFullName('');
+      setEmail('');
+      setPassword('');
+  }).catch((error) => {
+    Alert.alert('Error registering user');
+  });
+};
+
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
