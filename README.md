@@ -1,5 +1,5 @@
 # HealthAssist - React Native App
-HealthAssist is a mobile application developed to address the healthcare access challenges faced by residents of Toronto, Canada, with a focus on facilitating communication between patients and medical practitioners. The app allows users to schedule appointments, and access their resources, thereby enhancing the overall healthcare experience.
+HealthAssist is a mobile application developed to address the healthcare access challenges faced by residents of Toronto, Canada, with a focus on facilitating communication between patients and medical practitioners. The app would allow users to schedule appointments and access their resources, thereby enhancing the overall healthcare experience.
 
 ## Features
 - Appointment Scheduling: Patients can schedule appointments with medical practitioners based on availability.
