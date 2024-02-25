@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
+    backgroundColor: '#f0f8ff', // Light blue background color
   },
   inputContainer: {
     width: '100%',
@@ -86,23 +87,24 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginBottom: 5,
+    color: '#333', // Dark gray text color
   },
   input: {
     height: 40,
     width: '100%',
-    borderColor: 'gray',
+    borderColor: '#ccc', // Light gray border color
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: 'blue',
+    backgroundColor: '#007bff', // Blue button color
     padding: 15,
     borderRadius: 5,
     marginTop: 20,
   },
   buttonText: {
-    color: 'white',
+    color: '#fff', // White button text color
     fontSize: 16,
     fontWeight: 'bold',
   },
