@@ -1,36 +1,81 @@
-import React from 'react';
-import {View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 
 export default function PatientLogin() {
-  const handleLoginPress = () => {
-    // Add your login logic here
-    console.log('Login button pressed!');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = () => {
+    console.log('Form submitted:', {
+      email,
+      password,
+    });
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={handleLoginPress} style={styles.button}>
-        <Text style={styles.buttonText}>Form</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Email</Text>
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={text => setEmail(text.slice(0, 50))}
+          placeholder="Enter your email"
+          keyboardType="email-address"
+          maxLength={40}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Password</Text>
+        <TextInput
+          style={styles.input}
+          value={password}
+          onChangeText={text => setPassword(text.slice(0, 20))}
+          placeholder="Enter your password"
+          secureTextEntry={false}
+          maxLength={40}
+        />
+      </View>
+      
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  inputContainer: {
+    width: '100%',
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  input: {
+    height: 40,
+    width: '100%',
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
   },
   button: {
     backgroundColor: 'blue',
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 5,
     marginTop: 20,
   },
   buttonText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
   },
 });
