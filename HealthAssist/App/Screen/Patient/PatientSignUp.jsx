@@ -55,11 +55,7 @@ export default function PatientSignUp() {
         <TextInput
           style={styles.input}
           value={confirmPassword}
-          onChangeText={text => {
-            if (text !== password) {
-              setConfirmPassword(text);
-            }
-          }}
+          onChangeText={setConfirmPassword} // Just set the state directly
           placeholder="Confirm your password"
           secureTextEntry={false}
           maxLength={20}

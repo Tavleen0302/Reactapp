@@ -55,7 +55,7 @@ export default function Doctorsignup() {
         <TextInput
           style={styles.input}
           value={confirmPassword}
-          onChangeText={text => setConfirmPassword(text.slice(0, 20))}
+          onChangeText={setConfirmPassword} // Just set the state directly
           placeholder="Confirm your password"
           secureTextEntry={false}
           maxLength={20}
