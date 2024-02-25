@@ -49,7 +49,7 @@ export default function ProfessionalForm({ setScreen }) {
         setTimeFree('');
         setProfession('');
       })
-      setScreen('Home'); // Navigate to the next screen
+      setScreen('DoctorAppointments'); // Navigate to the next screen
   };
 
   return (

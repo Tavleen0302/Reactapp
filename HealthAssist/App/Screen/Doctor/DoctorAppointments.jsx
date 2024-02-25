@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 
-export default function DoctorAppointments() {
+export default function DoctorAppointments({ setScreen }) {
   // Sample data for past and current appointments
   const pastAppointments = [
     { patientName: 'John Doe', appointmentDate: '2023-10-15', appointmentTime: '10:00 AM' },
@@ -12,6 +12,11 @@ export default function DoctorAppointments() {
     { patientName: 'Alice Johnson', appointmentDate: '2023-11-05', appointmentTime: '09:00 AM' },
     { patientName: 'Bob Brown', appointmentDate: '2023-11-10', appointmentTime: '03:00 PM' },
   ];
+
+  const handlePersonalDocNavigation = () => {
+    // Set screen to 'PersonalDoc'
+    setScreen('PersonalDoc');
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -44,6 +49,11 @@ export default function DoctorAppointments() {
           </View>
         ))}
       </View>
+
+      {/* Button to set screen to 'PersonalDoc' */}
+      <TouchableOpacity style={styles.button} onPress={handlePersonalDocNavigation}>
+        <Text style={styles.buttonText}>Go to PersonalDoc</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
@@ -91,5 +101,17 @@ const styles = StyleSheet.create({
   appointmentInfo: {
     fontSize: 16,
     color: '#666',
+  },
+  button: {
+    backgroundColor: '#007bff',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 20, // Move the button a bit down
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
