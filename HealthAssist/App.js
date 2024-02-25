@@ -15,8 +15,8 @@ export default function App() {
   return (
     <View style={styles.container}>
       {screen === 'Home' && <Home setScreen={handleScreenChange} />}
-      {screen === 'Patientbuttons' && <Patientbuttons />}
-      {screen === 'Doctorbuttons' && <Doctorbuttons />}
+      {screen === 'Patientbuttons' && <Patientbuttons setScreen={handleScreenChange} />}
+      {screen === 'Doctorbuttons' && <Doctorbuttons setScreen={handleScreenChange} />}
       <StatusBar style="auto" />
     </View>
   );
