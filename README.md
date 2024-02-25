@@ -12,3 +12,5 @@ HealthAssist is a mobile application developed to address the healthcare access 
 - MongoDB Atlas: Cloud-based NoSQL database for storing user data and application components.
 - Express.js: Web application framework for building APIs and handling backend operations.
 - Node.js: JavaScript runtime for executing server-side code.
+
+<img src="https://github.com/Tavleen0302/Reactapp/assets/70829396/f2b9327f-449b-4a76-8258-7b2013eb627b" alt="image" width="200">
