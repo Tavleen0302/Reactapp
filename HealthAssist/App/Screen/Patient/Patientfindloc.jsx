@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, Button } from 'react-native';
 import { Calendar } from 'react-native-calendars';
+import axios from 'axios';
 
-export default function Patientfindloc() {
+export default function Patientfindloc({ setScreen }) {
   const [selectedProfessional, setSelectedProfessional] = useState('');
   const [selectedContact, setSelectedContact] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
@@ -27,6 +28,24 @@ export default function Patientfindloc() {
         Alert.alert('Error', 'Please select one option for each category');
         return;
     }
+    userData = {
+        professional: selectedProfessional,
+        contact: selectedContact,
+        chosenDate: selectedDate,
+    };
+    axios.post('http://localhost:8000/updateUser', userData)
+      .then((response) => {
+        console.log(response.data);
+        Alert.alert('Success', 'Appointment scheduled successfully');
+        setSelectedProfessional('');
+        setSelectedContact('');
+        setSelectedDate('');
+        setScreen('PatientsDoctorList');
+      })
+      .catch((error) => {
+        console.error('There was an error!', error);
+        Alert.alert('Error', 'There was an error scheduling the appointment');
+      });
     
   };
 
@@ -110,6 +129,10 @@ export default function Patientfindloc() {
             />
           </View>
         </Modal>
+        {/* Submit button */}
+            <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+              <Text style={styles.submitButtonText}>Find Your Appointment</Text>
+            </TouchableOpacity>
       </View>
     </View>
   );
@@ -172,5 +195,18 @@ const styles = StyleSheet.create({
   selectedDateText: {
     marginTop: 10,
     fontSize: 16,
+  },
+  submitButton: {
+    backgroundColor: 'blue',
+    padding: 15,
+    borderRadius: 5,
+    marginTop: 20,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+  },
+  submitButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
