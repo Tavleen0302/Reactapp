@@ -12,7 +12,7 @@ export default function Home({ setScreen }) {
         <Text style={styles.buttonText}>I'm a Medical Professional</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.button, { backgroundColor: 'blue' }]}
+        style={[styles.button, { backgroundColor: 'black' }]}
         onPress={() => setScreen('Patientbuttons')} // Change to Patientbuttons screen when the button is pressed
       >
         <Text style={styles.buttonText}>I'm a Patient</Text>
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     marginBottom: 40, // Increase marginBottom to move it lower
   },
   button: {
-    backgroundColor: 'green',
+    backgroundColor: 'black',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
