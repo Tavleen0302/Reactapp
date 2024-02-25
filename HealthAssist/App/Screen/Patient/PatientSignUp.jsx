@@ -7,22 +7,6 @@ export default function PatientSignUp() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSubmit = () => {
-    const data = {
-      fullName: fullName,
-      email: email,
-      password: password,    
-    };
-    axios.post('http://localhost:3000/api/patient/register', data).then((response) => {
-      console.log(response);
-      Alert.alert('User registered successfully');
-      setFullName('');
-      setEmail('');
-      setPassword('');
-  }).catch((error) => {
-    Alert.alert('Error registering user');
-  });
-};
 
 
   return (
