@@ -1,17 +1,34 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-
+import axios from 'axios';
 export default function PatientLogin({setScreen}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = () => {
     // Validate email and password here if needed
+    const data = {
+      email: email,
+      password: password,
+    };
+    // Send data to backend
 
-    // Navigate to the Patientfindloc page
-    setScreen('Patientfindloc');
+    axios.post('http://localhost:8000/login', data). then((response) => {
+      console.log(response.data);
+      Alert.alert('Success', 'You have logged in successfully');
+      setEmail('');
+      setPassword('');
+      // Navigate to the Patientfindloc page
+      setScreen('Patientfindloc');
+    } ).catch((error) => {
+      console.error('There was an error!', error);
+      Alert.alert('Error', 'There was an error logging in');
+    }
+    );
   };
+
+
+
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
