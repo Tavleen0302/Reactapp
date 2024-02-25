@@ -52,6 +52,8 @@ export default function App() {
         return <PatientAppointments setScreen={handleScreenChange} />;
       case 'PersonalDoc':
         return <PersonalDoc setScreen={handleScreenChange} />;
+      case 'Personal':
+        return <Personal setScreen={handleScreenChange} />;
       default:
         return <Home setScreen={handleScreenChange} />;
     }

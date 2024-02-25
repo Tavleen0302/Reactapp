@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, Button } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Button, Alert } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 //import axios from 'axios';
 
@@ -33,6 +33,7 @@ export default function Patientfindloc({ setScreen }) {
         contact: selectedContact,
         chosenDate: selectedDate,
     };
+    
     setScreen('PatientAppointments');
   
     

@@ -72,7 +72,7 @@ export default function Personal({ setScreen }) {
       setHealthCardURI('');
       setMedicalInfoURI('');
     })
-    setScreen('Patientfindloc');
+    setScreen('PatientAppointments');
 
   };
 

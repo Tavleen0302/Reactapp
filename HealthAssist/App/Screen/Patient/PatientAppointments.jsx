@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { ScrollView, View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 
-export default function PatientAppointments() {
+export default function PatientAppointments({ setScreen }) {
   // Sample data for nearby doctors and their availability
   const nearbyDoctors = [
     { id: 1, name: 'Dr. John Doe', rating: 4.5, availability: ['9:00 AM - 10:00 AM', '2:00 PM - 4:00 PM'] },
-    { id: 2, name: 'Dr. Jane Smith', rating: 4.2, availability: ['10:00 AM - 12:00 PM', '3:00 PM - 5:00 PM'] },
-    { id: 3, name: 'Dr. Michael Johnson', rating: 4.8, availability: ['8:00 AM - 11:00 AM', '1:00 PM - 3:00 PM'] },
-    // Add more sample data as needed
   ];
 
   const [selectedDoctor, setSelectedDoctor] = useState(null);
@@ -15,6 +12,14 @@ export default function PatientAppointments() {
   const handleRequestSent = (doctorId) => {
     // Logic to indicate request sent to the selected doctor
     setSelectedDoctor(doctorId);
+  };
+
+  // Function to navigate to PersonalDoc page
+  const goToApplication = () => {
+    setScreen('Personal'); // Navigate to PersonalDoc page using setScreen
+  };
+  const goToFinder = () => {
+    setScreen('Patientfindloc'); // Navigate to Finder page using setScreen
   };
 
   return (
@@ -50,6 +55,13 @@ export default function PatientAppointments() {
           </View>
         ))}
       </View>
+      {/* Button to go to PersonalDoc */}
+      <TouchableOpacity style={styles.button} onPress={goToApplication}>
+        <Text style={styles.buttonText}>Personal Info</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={goToFinder}>
+        <Text style={styles.buttonText}>Finder</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
@@ -125,6 +137,17 @@ const styles = StyleSheet.create({
   requestSentText: {
     color: '#fff',
     fontSize: 16,
+    fontWeight: 'bold',
+  },button: {
+    backgroundColor: '#007bff',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop:10, // Move the button a bit down
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 14,
     fontWeight: 'bold',
   },
 });
