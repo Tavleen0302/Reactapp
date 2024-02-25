@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   selectedCheckbox: {
-    backgroundColor: 'blue',
+    backgroundColor: '#4CAF50', // Change button color to green
   },
   checkboxText: {
     color: 'black',
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   selectedContactButton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#007bff', // Blue button color
   },
   contactButtonText: {
     color: 'black',
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   submitButton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#007bff', // Change button color to green
     padding: 15,
     borderRadius: 5,
     marginTop: 20,

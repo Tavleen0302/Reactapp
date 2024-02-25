@@ -147,21 +147,48 @@ app.post('/register', async (req, res) => {
     }
 });
 
-// Route to update user information
+// Route to update prof information
+app.post('/updateProfessional', async (req, res) => {
+    try {
+        const { fullName, email, password, phoneNumber, locationOfPractice, medicalLicense, appointmentWeekdaysFree, timeFree, profession, rating } = req.body;
+        
+        // Find the professional by fullName
+        const professional = await Prof.findOne({ fullName });
+        if (!professional) {
+            return res.status(404).json({ message: "Professional not found" });
+        }
+
+        // Update professional information
+        if (email) professional.email = email;
+        if (password) professional.password = password;
+        if (phoneNumber) professional.phoneNumber = phoneNumber;
+        if (locationOfPractice) professional.locationOfPractice = locationOfPractice;
+        if (medicalLicense) professional.medicalLicense = medicalLicense;
+        if (appointmentWeekdaysFree) professional.appointmentWeekdaysFree = appointmentWeekdaysFree;
+        if (timeFree) professional.timeFree = timeFree;
+        if (profession) professional.profession = profession;
+
+        await professional.save();
+        res.status(200).json({ message: "Professional updated successfully" });
+
+    } catch (err) {
+        console.log("Error updating professional", err);
+        res.status(500).json({ message: "Failed to update professional" });
+    }
+});
+
 // Route to update user information
 app.post('/updateUser', async (req, res) => {
     try {
         const { fullName, email, password, healthCard, phoneNumber, medicalInfo } = req.body;
-        const userId = req.user.id; // Assuming userId is available from authentication middleware
         
-        // Find the user by ID
-        const user = await User.findById(userId);
+        // Find the user by fullName
+        const user = await User.findOne({ fullName });
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
         // Update user information
-        if (fullName) user.fullName = fullName;
         if (email) user.email = email;
         if (password) user.password = password;
         if (healthCard) user.healthCard = healthCard;

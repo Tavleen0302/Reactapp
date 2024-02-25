@@ -1,138 +1,184 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import axios from 'axios';
+import * as DocumentPicker from 'expo-document-picker';
 
-export default function UserProfileUpdate({setScreen}) {
+export default function Personal({ setScreen }) {
   const [fullName, setFullName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [healthCard, setHealthCard] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [medicalInfo, setMedicalInfo] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  
 
-  useEffect(() => {
-    // Fetch user profile data when component mounts
-    fetchUserData();
-  }, []);
+  // State for uploaded health card and medical info
+  const [healthCardURI, setHealthCardURI] = useState('');
+  const [medicalInfoURI, setMedicalInfoURI] = useState('');
+  const handlePasswordChange = () => {
+    setIsNewPasswordModalVisible(true);
+};
+  
 
-  const fetchUserData = async () => {
+  // Function to handle health card upload
+  const handleHealthCardPick = async () => {
     try {
-      // Make a GET request to fetch user profile data
-      const response = await axios.get('http://localhost:8000/profile');
-      // Update state with user profile data
-      const userData = response.data;
-      setFullName(userData.fullName);
-      setEmail(userData.email);
-      setHealthCard(userData.healthCard);
-      setPhoneNumber(userData.phoneNumber);
-      setMedicalInfo(userData.medicalInfo);
+      const result = await DocumentPicker.getDocumentAsync();
+      if (result.type === 'success') {
+        setHealthCardURI(result.uri);
+      }
     } catch (error) {
-      console.error('Error fetching user profile:', error);
-      Alert.alert('Error', 'Failed to fetch user profile');
+      console.log('Error picking health card: ', error);
     }
   };
 
-  const handleUpdateUser = async () => {
+  // Function to handle medical info upload
+  const handleMedicalInfoPick = async () => {
     try {
-      // Make a POST request to update user information
-      await axios.post('http:/localhost:8000/updateUser', {
-        fullName,
-        email,
-        password,
-        healthCard,
-        phoneNumber,
-        medicalInfo,
-      });
-      Alert.alert('Success', 'User information updated successfully');
+      const result = await DocumentPicker.getDocumentAsync();
+      if (result.type === 'success') {
+        setMedicalInfoURI(result.uri);
+      }
     } catch (error) {
-      console.error('Error updating user information:', error);
-      Alert.alert('Error', 'Failed to update user information');
+      console.log('Error picking medical info: ', error);
     }
+  };
+
+  const handleSubmit = () => {
+    // Your form submission logic here
+    // This function is responsible for submitting the form data to the server
+   
+    if (phoneNumber !== '' && (phoneNumber.length !== 10 || isNaN(phoneNumber))) {
+        Alert.alert('Error', 'Please enter a valid phone number');
+        return;
+    }
+    
+    const data = {
+      fullName: fullName,
+      phoneNumber: phoneNumber,
+      email: email,
+      password: password,
+      healthCard: healthCardURI,
+      medicalInfo: medicalInfoURI,
+    }
+    console.log(data);
+    axios.post('http://localhost:8000/updateUser', data).then((response) => {
+      console.log(response.data);
+      Alert.alert('Success', 'You have updated your information successfully');
+      setFullName('');
+      setPhoneNumber('');
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+      setHealthCardURI('');
+      setMedicalInfoURI('');
+    })
+    setScreen('Patientfindloc');
+
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Full Name:</Text>
-      <TextInput
-        style={styles.input}
-        value={fullName}
-        onChangeText={setFullName}
-        placeholder="Enter your full name"
-      />
-      <Text style={styles.label}>Email:</Text>
-      <TextInput
-        style={styles.input}
-        value={email}
-        onChangeText={setEmail}
-        placeholder="Enter your email"
-      />
-      <Text style={styles.label}>Password:</Text>
-      <TextInput
-        style={styles.input}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        placeholder="Enter your password"
-      />
-      <Text style={styles.label}>Health Card:</Text>
-      <TextInput
-        style={styles.input}
-        value={healthCard}
-        onChangeText={setHealthCard}
-        placeholder="Enter your health card number"
-      />
-      <Text style={styles.label}>Phone Number:</Text>
-      <TextInput
-        style={styles.input}
-        value={phoneNumber}
-        onChangeText={setPhoneNumber}
-        keyboardType="phone-pad"
-        placeholder="Enter your phone number"
-      />
-      <Text style={styles.label}>Medical Info:</Text>
-      <TextInput
-        style={styles.input}
-        value={medicalInfo}
-        onChangeText={setMedicalInfo}
-        placeholder="Enter your medical information"
-      />
-      <TouchableOpacity style={styles.updateButton} onPress={handleUpdateUser}>
-        <Text style={styles.updateButtonText}>Update Profile</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Full Name</Text>
+        <TextInput
+          style={styles.input}
+          value={fullName}
+          onChangeText={text => setFullName(text)}
+          placeholder="Enter your full name"
+          maxLength={20}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Phone Number</Text>
+        <TextInput
+          style={styles.input}
+          value={phoneNumber}
+          onChangeText={text => setPhoneNumber(text)}
+          placeholder="Enter your phone number"
+          keyboardType="phone-pad"
+          maxLength={20}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Email</Text>
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={text => setEmail(text)}
+          placeholder="Enter your email"
+          keyboardType="email-address"
+          maxLength={20}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Change Password</Text>
+        <TextInput
+          style={styles.input}
+          value={password}
+          onChangeText={text => setPassword(text)}
+          placeholder="Enter your password"
+          secureTextEntry={false}
+          maxLength={20}
+        />
+      </View>
+      <TouchableOpacity style={styles.uploadButton} onPress={handleHealthCardPick}>
+        <Text style={styles.buttonText}>Upload Health Card</Text>
       </TouchableOpacity>
-    </View>
+      {healthCardURI ? <Text>{healthCardURI}</Text> : null}
+      <TouchableOpacity style={styles.uploadButton} onPress={handleMedicalInfoPick}>
+        <Text style={styles.buttonText}>Upload Medical Info</Text>
+      </TouchableOpacity>
+      {medicalInfoURI ? <Text>{medicalInfoURI}</Text> : null}
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <Text style={styles.buttonText}>Update</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
+    marginTop: 20,
+    backgroundColor: '#f0f8ff', // Light blue background color
+  },
+  inputContainer: {
+    width: '100%',
+    marginBottom: 20,
   },
   label: {
     fontSize: 16,
     marginBottom: 5,
   },
   input: {
-    width: '100%',
     height: 40,
-    borderWidth: 1,
+    width: '100%',
     borderColor: 'gray',
+    borderWidth: 1,
     borderRadius: 5,
-    marginBottom: 10,
     paddingHorizontal: 10,
   },
-  updateButton: {
-    backgroundColor: 'blue',
-    padding: 15,
+  uploadButton: {
+    backgroundColor: '#007bff',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 5,
-    marginTop: 20,
-    alignSelf: 'stretch',
-    alignItems: 'center',
+    marginTop: 10,
+    backgroundColor: '#007bff', // Blue button color
   },
-  updateButtonText: {
+  buttonText: {
     color: 'white',
     fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  button: {
+    backgroundColor: '#4CAF50', // Change button color to green
+    padding: 15,
+    borderRadius: 5,
+    marginTop: 10,
   },
 });
