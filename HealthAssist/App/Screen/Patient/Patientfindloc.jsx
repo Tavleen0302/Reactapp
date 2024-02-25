@@ -27,11 +27,7 @@ export default function Patientfindloc() {
         Alert.alert('Error', 'Please select one option for each category');
         return;
     }
-    console.log('Submitting data:', {
-      selectedProfessional,
-      selectedContact,
-      selectedDate,
-    });
+    
   };
 
   return (

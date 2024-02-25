@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: false,
         min: 6,
-        max: 255
+        max: 11111111111111111111111
     },
     medicalInfo: {
         type: String,

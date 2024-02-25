@@ -29,7 +29,7 @@ const User = require('./models/user');
 app.post('/register', async (req, res) => {
     console.log('reached');
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, healthCard, phoneNumber, medicalInfo } = req.body;
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: "User already exists" });
@@ -37,7 +37,10 @@ app.post('/register', async (req, res) => {
         const user = new User({
             name,
             email,
-            password
+            password,
+            healthCard,
+            phoneNumber,
+            medicalInfo,
         });
         await user.save();
         res.status(200).json({ message: "User registered" });
@@ -48,23 +51,3 @@ app.post('/register', async (req, res) => {
     }
 });
 
-// Second route to update user information
-app.post('/updateUser', async (req, res) => {
-    try {
-        const { healthCard, phoneNumber, medicalInfo, userId } = req.body;
-        // Assuming userId is sent from the client to identify the user to update
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-        // Update user information
-        user.healthCard = healthCard;
-        user.phoneNumber = phoneNumber;
-        user.medicalInfo = medicalInfo;
-        await user.save();
-        res.status(200).json({ message: "User information updated successfully" });
-    } catch (err) {
-        console.log("error updating user information", err);
-        res.status(500).json({ message: "Failed to update user information" });
-    }
-});
