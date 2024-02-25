@@ -1,8 +1,28 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert, Modal } from 'react-native';
 import axios from 'axios';
+import * as DocumentPicker from 'expo-document-picker';
+import { Calendar } from 'react-native-calendars';
+
+
 
 export default function ProfessionalForm({ setScreen }) {
+  const [selectedDays, setSelectedDays] = useState({});
+  const onDayPress = (day) => {
+    const updatedSelectedDays = { ...selectedDays, [day.dateString]: { selected: true } };
+    setSelectedDays(updatedSelectedDays);
+    };
+
+    
+
+      const professionOptions = [
+        { label: 'Family Doctor', value: 'Family Doctor' },
+        { label: 'Pediatrician', value: 'Pediatrician' },
+        { label: 'Therapist', value: 'Therapist' },
+        { label: 'Dentist', value: 'Dentist' },
+      ];
+      
+
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,6 +33,19 @@ export default function ProfessionalForm({ setScreen }) {
   const [appointmentWeekdaysFree, setAppointmentWeekdaysFree] = useState('');
   const [timeFree, setTimeFree] = useState('');
   const [profession, setProfession] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+
+  const handleDocumentPick = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync();
+      if (result.type === 'success') {
+        setMedicalLicense(result.uri);
+      }
+    } catch (error) {
+      console.log('Error picking document: ', error);
+    }
+  };
 
   const handleSubmit = () => {
 
@@ -107,25 +140,20 @@ export default function ProfessionalForm({ setScreen }) {
         />
       </View>
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Medical License</Text>
-        <TextInput
-          style={styles.input}
-          value={medicalLicense}
-          onChangeText={text => setMedicalLicense(text)}
-          placeholder="Enter medical license"
-          maxLength={255}
-        />
-      </View>
+          <Text style={styles.label}>Medical License</Text>
+          <TouchableOpacity style={styles.uploadButton} onPress={handleDocumentPick}>
+            <Text style={styles.uploadButtonText}>Upload Document</Text>
+          </TouchableOpacity>
+          {medicalLicense ? <Text>{medicalLicense}</Text> : null}
+        </View>
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Appointment Weekdays Free</Text>
-        <TextInput
-          style={styles.input}
-          value={appointmentWeekdaysFree}
-          onChangeText={text => setAppointmentWeekdaysFree(text)}
-          placeholder="Enter weekdays free for appointments"
-          maxLength={255}
+        <Calendar
+            markedDates={selectedDays}
+            onDayPress={onDayPress}
+            markingType={'multi-dot'}
         />
-      </View>
+        </View>
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Time Free</Text>
         <TextInput
@@ -137,15 +165,35 @@ export default function ProfessionalForm({ setScreen }) {
         />
       </View>
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Profession</Text>
-        <TextInput
-          style={styles.input}
-          value={profession}
-          onChangeText={text => setProfession(text)}
-          placeholder="Enter profession"
-          maxLength={255}
-        />
+  <Text style={styles.label}>Profession</Text>
+  <TouchableOpacity style={styles.professionInput} onPress={() => setIsModalVisible(true)}>
+    <Text>{profession || 'Select Profession'}</Text>
+  </TouchableOpacity>
+  <Modal
+    visible={isModalVisible}
+    animationType="slide"
+    transparent={true}
+    onRequestClose={() => setIsModalVisible(false)}
+  >
+    <View style={styles.modalContainer}>
+      <View style={styles.modalContent}>
+        {professionOptions.map(option => (
+          <TouchableOpacity
+            key={option.value}
+            style={styles.professionOption}
+            onPress={() => {
+              setProfession(option.value);
+              setIsModalVisible(false);
+            }}
+          >
+            <Text>{option.label}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
+    </View>
+  </Modal>
+</View>
+
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Update</Text>
       </TouchableOpacity>
@@ -189,5 +237,41 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  uploadButton: {
+    backgroundColor: '#007bff', // Blue button color
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  uploadButtonText: {
+    color: '#fff', // White button text color
+    fontSize: 14,
+  },
+  professionInput: {
+    height: 40,
+    width: '100%',
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    justifyContent: 'center',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+  },
+  professionOption: {
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: 'gray',
   },
 });
